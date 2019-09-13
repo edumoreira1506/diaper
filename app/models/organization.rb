@@ -99,6 +99,10 @@ class Organization < ApplicationRecord
     inventory_items.sum(:quantity) || 0
   end
 
+  def during(date_start, date_end = Time.now.strftime("%Y-%m-%d"))
+    items.where("created_at BETWEEN '#{date_start}' and '#{date_end}'")
+  end
+
   def scale_values
     {
       pu_2t_3t: items.find_by(name: "Kids Pull-Ups (2T-3T)").id,
